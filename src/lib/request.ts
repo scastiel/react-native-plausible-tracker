@@ -21,11 +21,22 @@ export async function sendEvent({
   eventProps,
   options,
 }: SendEventOptions): Promise<void> {
-  const { trackDuringDevelopment } = options;
+  const { trackDuringDevelopment, debug } = options;
+
+  const debugLogger = {
+    warn: (...args: any[]) => (debug && console.warn(
+      ...args
+    )),
+    debug: (...args: any[]) => (debug && console.debug(
+      ...args
+    ))
+  }
+
   if (!trackDuringDevelopment && __DEV__) {
-    return console.warn(
+    debugLogger.warn(
       '[Plausible] Ignoring event because app is running in development'
     );
+    return;
   }
 
   const payload: EventPayload = {
@@ -45,19 +56,17 @@ export async function sendEvent({
     "X-Forwarded-For": "127.0.0.1",
   }
 
-  if (options.debug) {
-    console.debug("Plausible request: ", JSON.stringify({ apiUrl, headers, payload}, null, 2))
-  }
+  debugLogger.debug("Plausible request: ", JSON.stringify({ apiUrl, headers, payload}, null, 2))
 
   await fetch(apiUrl, {
     method: 'POST',
     headers,
     body: JSON.stringify(payload),
   }).then(res => res.text()).then(res => {
-    console.log("Plausible API response: ", { text: res})
+    debugLogger.debug("Plausible API response: ", { text: res})
     return res;
   }).catch(e => {
-    console.log("Plausible API error: ", { error: e.message})
+    debugLogger.debug("Plausible API error: ", { error: e.message})
     throw e;
   });
 }
