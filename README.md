@@ -4,7 +4,11 @@
 
 ```sh
 yarn add react-native-plausible-tracker
-# or
+```
+
+or
+
+```sh
 npm install --save react-native-plausible-tracker
 ```
 
@@ -12,7 +16,11 @@ Don't forget to install the peerDependencies if not already in use:
 
 ```sh
 yarn add react-native-device-info
-# or
+```
+
+or
+
+```sh
 npm install --save react-native-device-info
 ```
 
