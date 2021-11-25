@@ -1,7 +1,11 @@
 import { sendEvent } from './request';
 import { Dimensions } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import { PlausibleEventData, PlausibleInitOptions, PlausibleOptions } from './interfaces';
+import {
+  PlausibleEventData,
+  PlausibleInitOptions,
+  PlausibleOptions,
+} from './interfaces';
 
 /**
  * Tracks a custom event.
@@ -29,7 +33,7 @@ import { PlausibleEventData, PlausibleInitOptions, PlausibleOptions } from './in
  */
 type TrackEvent = (
   eventName: string,
-  eventProps?: {[key: string]: string},
+  eventProps?: { [key: string]: string },
   options?: PlausibleEventData
 ) => void;
 
@@ -54,7 +58,7 @@ type TrackEvent = (
  */
 type TrackScreen = (
   screenName: string,
-  eventProps?: {[key: string]: string},
+  eventProps?: { [key: string]: string },
   options?: PlausibleEventData
 ) => void;
 
@@ -83,47 +87,44 @@ export default function Plausible(
   readonly trackScreen: TrackScreen;
 } {
   const getUrlForScreenName = async (screenName: string) => {
-    return `app://${await DeviceInfo.getBundleId()}/${screenName}`
-  }
-
+    return `app://${await DeviceInfo.getBundleId()}/${screenName}`;
+  };
 
   const getUserAgent = async (): Promise<string> => {
     return await DeviceInfo.getUserAgent();
-  }
+  };
 
   const getConfig = async (): Promise<Required<PlausibleOptions>> => ({
     trackDuringDevelopment: false,
     debug: false,
-    url: "",
+    url: '',
     referrer: null,
-    deviceWidth: Dimensions.get("window").width,
+    deviceWidth: Dimensions.get('window').width,
     userAgent: await getUserAgent(),
     apiHost: 'https://plausible.io',
     ...defaults,
   });
 
-
   const trackEvent: TrackEvent = async (eventName, props, options) => {
     sendEvent({
-      eventName, 
-      eventProps: props, 
-      options: { 
+      eventName,
+      eventProps: props,
+      options: {
         ...(await getConfig()),
-        ...options 
-      }
+        ...options,
+      },
     });
   };
 
   const trackScreen: TrackScreen = async (screenName, props, options) => {
-    trackEvent('pageview', props, {
+    await trackEvent('pageview', props, {
       url: await getUrlForScreenName(screenName),
-      ...options
+      ...options,
     });
   };
 
   return {
     trackEvent,
-    trackScreen
+    trackScreen,
   };
 }
-

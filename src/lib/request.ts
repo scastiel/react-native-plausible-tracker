@@ -1,4 +1,4 @@
-import { PlausibleOptions } from "..";
+import { PlausibleOptions } from '..';
 
 type EventPayload = {
   readonly n: string;
@@ -8,7 +8,6 @@ type EventPayload = {
   readonly w: number;
   readonly p?: string;
 };
-
 
 export type SendEventOptions = {
   eventName: string;
@@ -24,13 +23,9 @@ export async function sendEvent({
   const { trackDuringDevelopment, debug } = options;
 
   const debugLogger = {
-    warn: (...args: any[]) => (debug && console.warn(
-      ...args
-    )),
-    debug: (...args: any[]) => (debug && console.debug(
-      ...args
-    ))
-  }
+    warn: (...args: any[]) => debug && console.warn(...args),
+    debug: (...args: any[]) => debug && console.debug(...args),
+  };
 
   if (!trackDuringDevelopment && __DEV__) {
     debugLogger.warn(
@@ -53,20 +48,26 @@ export async function sendEvent({
   const headers = {
     'Content-Type': 'application/json',
     'User-Agent': options.userAgent,
-    "X-Forwarded-For": "127.0.0.1",
-  }
+    'X-Forwarded-For': '127.0.0.1',
+  };
 
-  debugLogger.debug("Plausible request: ", JSON.stringify({ apiUrl, headers, payload}, null, 2))
+  debugLogger.debug(
+    'Plausible request: ',
+    JSON.stringify({ apiUrl, headers, payload }, null, 2)
+  );
 
   await fetch(apiUrl, {
     method: 'POST',
     headers,
     body: JSON.stringify(payload),
-  }).then(res => res.text()).then(res => {
-    debugLogger.debug("Plausible API response: ", { text: res})
-    return res;
-  }).catch(e => {
-    debugLogger.debug("Plausible API error: ", { error: e.message})
-    throw e;
-  });
+  })
+    .then(res => res.text())
+    .then(res => {
+      debugLogger.debug('Plausible API response: ', { text: res });
+      return res;
+    })
+    .catch(e => {
+      debugLogger.debug('Plausible API error: ', { error: e.message });
+      throw e;
+    });
 }

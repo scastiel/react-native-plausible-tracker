@@ -1,8 +1,7 @@
-
 /**
  * Options used when initializing the tracker.
  */
- export type PlausibleInitOptions = {
+export type PlausibleInitOptions = {
   /**
    * Set to true if you want events to be tracked when running the app in __DEV__ mode
    */
@@ -10,7 +9,7 @@
   /**
    * Set to true if you want the events to be logged to the console before being sent
    */
-   readonly debug?: boolean;
+  readonly debug?: boolean;
   /**
    * The domain to bind the event to.
    */
