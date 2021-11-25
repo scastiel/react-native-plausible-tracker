@@ -20,7 +20,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Plausible from './plausible-lib';
 
 const plausible = Plausible({
-  domain: 'mealyo.app',
+  domain: 'example.com',
   trackDuringDevelopment: true,
   debug: true,
 });
