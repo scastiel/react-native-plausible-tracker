@@ -1,0 +1,49 @@
+{
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
+  },
+  "peerDependencies": {
+    "react": ">=16",
+    "react-native": "^0.62.0",
+    "react-native-device-info": "^8.4.8"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "react-native-plausible-tracker",
+  "author": "Benjamin White",
+  "module": "dist/react-native-plausible-tracker.esm.js",
+  "devDependencies": {
+    "@types/react": "^17.0.37",
+    "@types/react-native": "^0.66.6",
+    "husky": "^7.0.4",
+    "react": "^17.0.2",
+    "react-native-device-info": "^8.4.8",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.2"
+  }
+}
