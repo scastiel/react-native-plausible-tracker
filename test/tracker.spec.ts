@@ -1,4 +1,4 @@
-import Plausible from './tracker';
+import Plausible from '../src/lib/tracker';
 
 describe('Plausible', () => {
   beforeEach(() => {
@@ -48,7 +48,7 @@ describe('Plausible', () => {
         }
       );
     });
-
+    
     it('should track an event with extra properties', async () => {
       const plausible = Plausible({
         domain: 'example.com',
