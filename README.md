@@ -20,7 +20,7 @@ npm install --save react-native-device-info
 
 See full example at [example/App.tsx](example/App.tsx)
 
-```typescriptreact
+```typescript
 import Plausible from 'react-native-plausible-tracker';
 
 const plausible = Plausible({
@@ -46,14 +46,14 @@ export const MyComponent() {
 
 This is mostly based on https://reactnavigation.org/docs/screen-tracking/
 
-```typescriptreact
+```typescript
 function App() {
   const navigationRef = useNavigationContainerRef();
   const routeNameRef = useRef<string>();
 
   const plausible = Plausible({
-    domain: "example.com"
-  })
+    domain: 'example.com',
+  });
 
   return (
     <NavigationContainer
@@ -71,7 +71,8 @@ function App() {
 
         // Save the current route name for later comparison
         routeNameRef.current = currentRouteName;
-      }}>
+      }}
+    >
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Nested" component={NestedScreen} />
